@@ -88,7 +88,7 @@ PATCH_DIR="$PATCH_DIR" >&2
 MODULES_DIR="$MODULES_DIR" >&2
 TOOLS_DIR="$TOOLS_DIR" >&2
 RAMDISK_DIR="$RAMDISK_DIR" >&2
-RAMDISK_KraKen_DIR="$RAMDISK_KraKen_DIR" >&2
+RAMDISK_Kraken_DIR="$RAMDISK_Kraken_DIR" >&2
 DEFCONFIGS="$DEFCONFIGS" >&2
 ZIP_MOVE="$ZIP_MOVE" >&2
 COPY_ZIP="$COPY_ZIP" >&2
@@ -222,7 +222,7 @@ function check_filesize() {
 	minsize=3
 	maxsize=18
 	cd $ZIP_MOVE
-	file="KraKenKernel_""$REV""_""$VARIANT""_""$KVER"".zip"
+	file="KrakenKernel_""$REV""_""$VARIANT""_""$KVER"".zip"
 	actualsize=$(du -k "$file" | cut -f 1)
 	if [ $actualsize -ge $maxsize ]; then
     echo size is over $maxsize kilobytes
@@ -260,7 +260,7 @@ function bump_defconfigs() {
 		do
 		DEFCONFIG="${x}_defconfig"
 		cd $DEFCONFIGS
-		sed -i '9s/.*/CONFIG_LOCALVERSION="-KraKen_Rev'$BUMP_REV'"/' $DEFCONFIG
+		sed -i '9s/.*/CONFIG_LOCALVERSION="-Kraken_Rev'$BUMP_REV'"/' $DEFCONFIG
 		
 		cd $KERNEL_DIR
 done
@@ -401,7 +401,7 @@ function menu_settings() {
 		echo "Test1: $TestBuild"
 		if [ $TestBuild == '1' ]; then
 			echo "This worked:" 
-			#cp KraKenKernel_"$REV"_"$VARIANT"_"$KVER".zip $COPY_ZIP
+			#cp KrakenKernel_"$REV"_"$VARIANT"_"$KVER".zip $COPY_ZIP
 			else
 			echo "Didnt Work" 
 		fi
@@ -465,11 +465,11 @@ function make_dtb {
 }
 
 function make_zip {
-		cp -vr $RAMDISK_KraKen_DIR $REPACK_DIR
+		cp -vr $RAMDISK_Kraken_DIR $REPACK_DIR
 		cd $REPACK_DIR
-		zip -r9 KraKenKernel_"$REV"_"$VARIANT"_"$KVER".zip *
-		mv KraKenKernel_"$REV"_"$VARIANT"_"$KVER".zip $ZIP_MOVE
-		rm -rf KraKenKernel_"$REV"_"$VARIANT"_"$KVER".zip
+		zip -r9 KrakenKernel_"$REV"_"$VARIANT"_"$KVER".zip *
+		mv KrakenKernel_"$REV"_"$VARIANT"_"$KVER".zip $ZIP_MOVE
+		rm -rf KrakenKernel_"$REV"_"$VARIANT"_"$KVER".zip
 		cd $KERNEL_DIR
 }
 
@@ -481,7 +481,7 @@ function finished_build {
 	check_filesize
 		if [ -e $ZIMAGE_DIR/$KERNEL ]; then
 	dialog --title  "Build Finished"  --backtitle  "Build Finished" \
-	--infobox  "KraKenKernel_'$REV'_'$VARIANT'_'$KVER'.zip \n\
+	--infobox  "KrakenKernel_'$REV'_'$VARIANT'_'$KVER'.zip \n\
 	Created Successfully..\n\
 	FileSize: $actualsize kb \n\
     Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds." 7 65 ; read 
@@ -490,7 +490,7 @@ dialog --title  "Build Not Completed"  --backtitle  "Build Had Errors" \
 	--infobox  "Build Aborted Do to errors, zImage doesnt exist,\n\
 	Unsuccessful Build.." 7 65 ; read
 	cd $ZIP_MOVE
-	rm -rf KraKenKernel_"$REV"_"$VARIANT"_"$KVER".zip
+	rm -rf KrakenKernel_"$REV"_"$VARIANT"_"$KVER".zip
 	cd $KERNEL_DIR
 	fi
 }
@@ -499,7 +499,7 @@ DATE_START=$(date +"%s")
 
 function build_kernels {
 echo -e "${green}"
-echo "KraKenKernel Creation Script:"
+echo "KrakenKernel Creation Script:"
 echo -e "${restore}"
 
 ## Build Menu ##
@@ -638,7 +638,7 @@ main() {
 
 echo -e "${green}"
 echo "--------------------------------------------------------"
-echo "KraKenKernel_'$REV'_'$VARIANT'_'$KVER'-signed.zip"
+echo "KrakenKernel_'$REV'_'$VARIANT'_'$KVER'-signed.zip"
 echo "Created Successfully.."
 echo "Build Completed in:"
 echo "--------------------------------------------------------"
